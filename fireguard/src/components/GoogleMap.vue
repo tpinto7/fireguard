@@ -24,11 +24,13 @@
         @click="center=m.position"
       ></gmap-marker>
     </gmap-map>
+    {{notUsed}} 123
   </div>
 </template>
 
 <script>
 export default {
+    // fetch 
   name: "GoogleMap",
   data() {
     return {
@@ -37,12 +39,22 @@ export default {
       center: { lat: 45.508, lng: -73.587 },
       markers: [],
       places: [],
-      currentPlace: null
+      currentPlace: null,
+      notUsed: ''
     };
   },
 
   mounted() {
     this.geolocate();
+    
+    fetch('https://localhost:5050/googleCloudAPI')
+  .then((response) => {
+    return response.json();
+  })
+  .then((myJson) => {
+      this.notUsed = myJson;
+    // console.log(myJson);
+  });
   },
 
   methods: {

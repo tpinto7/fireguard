@@ -35,7 +35,7 @@ Vue.config.productionTip = false
 // heatmap.setMap(map);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyAqi3uNZU9jTFavql1RDAhVOw6H0MaO6bs",
+    key: "AIzaSyCyyY-HTm04WNkl56o8dVmZOfIvoFcpkn4",
     libraries: "places" // necessary for places input
   }
 });
