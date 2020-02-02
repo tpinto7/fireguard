@@ -1,38 +1,30 @@
 import Vue from 'vue'
 import App from './App.vue'
 import * as VueGoogleMaps from "vue2-google-maps";
-
+import VueMaterial from 'vue-material'
+import { firestorePlugin } from 'vuefire'
+import firebase from 'firebase'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.config.productionTip = false
-
-// var heatmapData = [
-//   new google.maps.LatLng(37.782, -122.447),
-//   new google.maps.LatLng(37.782, -122.445),
-//   new google.maps.LatLng(37.782, -122.443),
-//   new google.maps.LatLng(37.782, -122.441),
-//   new google.maps.LatLng(37.782, -122.439),
-//   new google.maps.LatLng(37.782, -122.437),
-//   new google.maps.LatLng(37.782, -122.435),
-//   new google.maps.LatLng(37.785, -122.447),
-//   new google.maps.LatLng(37.785, -122.445),
-//   new google.maps.LatLng(37.785, -122.443),
-//   new google.maps.LatLng(37.785, -122.441),
-//   new google.maps.LatLng(37.785, -122.439),
-//   new google.maps.LatLng(37.785, -122.437),
-//   new google.maps.LatLng(37.785, -122.435)
-// ];
-
-// var sanFrancisco = new google.maps.LatLng(37.774546, -122.433523);
-
-// map = new google.maps.Map(document.getElementById('map'), {
-//   center: sanFrancisco,
-//   zoom: 13,
-//   mapTypeId: 'satellite'
-// });
-
-// var heatmap = new google.maps.visualization.HeatmapLayer({
-//   data: heatmapData
-// });
-// heatmap.setMap(map);
+Vue.use(BootstrapVue)
+Vue.use(firestorePlugin)
+var firebaseConfig = {
+  apiKey: "AIzaSyDHWPY4NelJCF-UkuLjcH2WX4njgU5TDVI",
+  authDomain: "fireguard-88888.firebaseapp.com",
+  databaseURL: "https://fireguard-88888.firebaseio.com",
+  projectId: "fireguard-88888",
+  storageBucket: "fireguard-88888.appspot.com",
+  messagingSenderId: "434458514176",
+  appId: "1:434458514176:web:60d16d55a6f382e7e899e5"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+export var database = firebase.database();
+Vue.use(VueMaterial)
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyCyyY-HTm04WNkl56o8dVmZOfIvoFcpkn4",

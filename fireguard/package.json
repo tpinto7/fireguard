@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "firebase": "^7.8.0",
     "vue": "^2.6.10",
-    "vue2-google-maps": "^0.10.7"
+    "vue-material": "^1.0.0-beta-11",
+    "vue2-google-maps": "^0.10.7",
+    "vuefire": "^2.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
