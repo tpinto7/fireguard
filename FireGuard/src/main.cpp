@@ -144,9 +144,99 @@ void loop()
   GenerateTVOCData("Sample1", 200, 400);
   GenerateSoilData("Sample1", 0, 5);
   GenerateColorTempData("Sample1", 8000, 10000);
-  GenerateLightIntensityData("Sample1", 2000, 3000);
+  GenerateLightIntensityData("Sample1", 20000, 30000);
   GenerateUVData("Sample1", 50000, 60000);
-  )
+  
+  // Sample2 -> Cold, Damp, Dark
+  GenerateTemperatureData("Sample2", 0, 8);
+  GenerateHumidityData("Sample2", 40, 60);
+  GenerateCO2Data("Sample2", 300, 500);
+  GenerateTVOCData("Sample2", 200, 400);
+  GenerateSoilData("Sample2", 100, 150);
+  GenerateColorTempData("Sample2", 1000, 2000);
+  GenerateLightIntensityData("Sample2", 500, 1000);
+  GenerateUVData("Sample2", 10000, 20000);
+
+  // Sample3 -> Warm, Damp, Dark
+  GenerateTemperatureData("Sample3", 20, 30);
+  GenerateHumidityData("Sample3", 40, 60);
+  GenerateCO2Data("Sample3", 200, 350);
+  GenerateTVOCData("Sample3", 200, 400);
+  GenerateSoilData("Sample3", 150, 200);
+  GenerateColorTempData("Sample3", 1000, 2000);
+  GenerateLightIntensityData("Sample3", 500, 1000);
+  GenerateUVData("Sample3", 10000, 20000);
+
+  // Sample4 -> Cold, Dry, Dark
+  GenerateTemperatureData("Sample4", 0, 7);
+  GenerateHumidityData("Sample4", 0, 10);
+  GenerateCO2Data("Sample4", 200, 350);
+  GenerateTVOCData("Sample4", 200, 400);
+  GenerateSoilData("Sample4", 20, 100);
+  GenerateColorTempData("Sample4", 500, 800);
+  GenerateLightIntensityData("Sample4", 500, 1000);
+  GenerateUVData("Sample4", 8000, 18000);
+
+  // Sample5 -> Almost Fire
+  GenerateTemperatureData("Sample5", 300, 350);
+  GenerateHumidityData("Sample5", 0, 5);
+  GenerateCO2Data("Sample5", 800, 1050);
+  GenerateTVOCData("Sample5", 900, 1400);
+  GenerateSoilData("Sample5", 0, 50);
+  GenerateColorTempData("Sample5", 8000, 8800);
+  GenerateLightIntensityData("Sample5", 50000, 100000);
+  GenerateUVData("Sample5", 100000, 208000);
+
+  // Sample6 -> Almost Fire
+  GenerateTemperatureData("Sample6", 300, 350);
+  GenerateHumidityData("Sample6", 0, 5);
+  GenerateCO2Data("Sample6", 800, 1050);
+  GenerateTVOCData("Sample6", 900, 1400);
+  GenerateSoilData("Sample6", 0, 50);
+  GenerateColorTempData("Sample6", 8000, 8800);
+  GenerateLightIntensityData("Sample6", 50000, 100000);
+  GenerateUVData("Sample6", 100000, 208000);
+
+  // Sample7 -> Almost Fire
+  GenerateTemperatureData("Sample7", 300, 350);
+  GenerateHumidityData("Sample7", 0, 5);
+  GenerateCO2Data("Sample7", 800, 1050);
+  GenerateTVOCData("Sample7", 900, 1400);
+  GenerateSoilData("Sample7", 0, 50);
+  GenerateColorTempData("Sample7", 8000, 8800);
+  GenerateLightIntensityData("Sample7", 50000, 100000);
+  GenerateUVData("Sample7", 100000, 208000);
+
+  // Sample8 -> Fire
+  GenerateTemperatureData("Sample8", 600, 800);
+  GenerateHumidityData("Sample8", 0, 5);
+  GenerateCO2Data("Sample8", 1200, 1800);
+  GenerateTVOCData("Sample8", 1500, 2000);
+  GenerateSoilData("Sample8", 0, 10);
+  GenerateColorTempData("Sample8", 10000, 15000);
+  GenerateLightIntensityData("Sample8", 80000, 130000);
+  GenerateUVData("Sample8", 200000, 308000);
+
+  // Sample9 -> Fire
+  GenerateTemperatureData("Sample9", 600, 800);
+  GenerateHumidityData("Sample9", 0, 5);
+  GenerateCO2Data("Sample9", 1200, 1800);
+  GenerateTVOCData("Sample9", 1500, 2000);
+  GenerateSoilData("Sample9", 0, 10);
+  GenerateColorTempData("Sample9", 10000, 15000);
+  GenerateLightIntensityData("Sample9", 80000, 130000);
+  GenerateUVData("Sample9", 200000, 308000);
+
+  // Sample10 -> Fire
+  GenerateTemperatureData("Sample10", 600, 800);
+  GenerateHumidityData("Sample10", 0, 5);
+  GenerateCO2Data("Sample10", 1200, 1800);
+  GenerateTVOCData("Sample10", 1500, 2000);
+  GenerateSoilData("Sample10", 0, 10);
+  GenerateColorTempData("Sample10", 10000, 15000);
+  GenerateLightIntensityData("Sample10", 80000, 130000);
+  GenerateUVData("Sample10", 200000, 308000);
+
 #ifdef DHT_TEST
   // DHT11 Temperature and Humidity Sensor
   float h = dht.readHumidity();
