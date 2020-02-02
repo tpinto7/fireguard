@@ -5,6 +5,7 @@
       :center="center"
       :zoom="12"
       style="width:100%;  height: 600px;"
+      ref="mapRef"
     >
       <gmap-marker
         :key="index"
@@ -18,24 +19,43 @@
 </template>
 
 <script>
+// import {gmapApi} from "vue2-google-maps";
+// import gmapsInit from '.././utils/gmaps';
 export default {
     // fetch 
   name: "GoogleMap",
+
+  
   data() {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [],
+      markers: [
+          { position: { lat: 43.653, lng: -79.383}},
+          {position: { lat: 44.231, lng: -76.486}},
+          {position: { lat: 43.464, lng: -80.52}},
+          {position: { lat: 19.076, lng: 72.878} }],
       places: [],
       currentPlace: null,
       notUsed: ''
     };
   },
 
-  mounted() {
+  async mounted() {
     this.geolocate();
-    
+    // const google = await gmapsInit();
+    // const geocoder = new google.maps.Geocoder();
+    //   const map = new google.maps.Map(this.$el);
+    // geocoder.geocode({ address: 'Austria' }, (results, status) => {
+    //     if (status !== 'OK' || !results[0]) {
+    //       throw new Error(status);
+    //     }
+
+    //     map.setCenter(results[0].geometry.location);
+    //     map.fitBounds(results[0].geometry.viewport);
+    //   });
+
     this.$root.$on('location', (location) => {
         this.center = location
     });
@@ -74,7 +94,20 @@ export default {
           lng: position.coords.longitude
         };
       });
-    }
+    },
+//     getPoints() {
+//         return [
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+// new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//           new gmapApi.LatLng(43.653, -79.383),
+//         ]
+//     }
   }
 };
 </script>

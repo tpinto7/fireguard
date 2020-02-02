@@ -9,6 +9,8 @@ import 'vue-material/dist/theme/default.css'
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import { Verify } from 'nexmo';
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(firestorePlugin)
@@ -25,12 +27,15 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export var database = firebase.database();
 Vue.use(VueMaterial)
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyCyyY-HTm04WNkl56o8dVmZOfIvoFcpkn4",
     libraries: "places" // necessary for places input
   }
 });
+Vue.component('google-heatmaps-layer', VueGoogleMaps.HeatmapLayer);
+
 
 new Vue({
   render: h => h(App),
