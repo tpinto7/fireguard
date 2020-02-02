@@ -23,6 +23,7 @@
 #define CCS811_TEST
 #define VEML6070_TEST
 #define TCS35725_TEST
+#define SOIL
 
 // DHT11
 #define DHT_PIN D3
@@ -38,6 +39,10 @@ Adafruit_VEML6070 uv = Adafruit_VEML6070();
 
 // TCS34725
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
+
+// Soil moisture sensor
+#define sense_pin 0
+int MoistureLevel = 0;
 
 void ConnectToWifi()
 {
@@ -65,6 +70,39 @@ void ConnectToWifi()
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   Serial.println("");
+}
+
+void GenerateTemperatureData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/DHT11/temperature", random(lower, upper));
+}
+void GenerateHumidityData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/DHT11/humidity", random(lower, upper));
+}
+void GenerateCO2Data(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/CCS811/CO2", random(lower, upper));
+}
+void GenerateTVOCData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/CCS811/TVOC", random(lower, upper));
+}
+void GenerateSoilData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/SN13322/SoilMoisture", random(lower, upper));
+}
+void GenerateColorTempData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/TCS34725/ColorTemperature", random(lower, upper));
+}
+void GenerateLightIntensityData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/TCS34725/LightIntensity", random(lower, upper));
+}
+void GenerateUVData(String FirebaseHeading, int lower, int upper)
+{
+  String tempValueID = Firebase.pushInt(FirebaseHeading + "/VEML6070/UV", random(lower, upper));
 }
 
 void setup() 
@@ -99,6 +137,16 @@ void setup()
 
 void loop() 
 {
+  // Sample1 -> Warm, Dry, Bright
+  GenerateTemperatureData("Sample1", 25, 40);
+  GenerateHumidityData("Sample1", 10, 20);
+  GenerateCO2Data("Sample1", 300, 500);
+  GenerateTVOCData("Sample1", 200, 400);
+  GenerateSoilData("Sample1", 0, 5);
+  GenerateColorTempData("Sample1", 8000, 10000);
+  GenerateLightIntensityData("Sample1", 2000, 3000);
+  GenerateUVData("Sample1", 50000, 60000);
+  )
 #ifdef DHT_TEST
   // DHT11 Temperature and Humidity Sensor
   float h = dht.readHumidity();
@@ -114,27 +162,27 @@ void loop()
   if ((t >= -15 && t <= 80) && (h >= 0 && h <= 100)) 
   {
     // === Push temperature value to Firebase ===
-    String tempValueID = Firebase.pushFloat("DHT11/temperature", t);
+    String tempValueID = Firebase.pushFloat("Live/DHT11/temperature", t);
     if (Firebase.failed()) 
     {
-        Serial.print("[ERROR] pushing /DHT11/temperature failed:");
+        Serial.print("[ERROR] pushing /Live/DHT11/temperature failed:");
         Serial.println(Firebase.error());
         return;
     }
 
-    Serial.print("[INFO] pushed: /DHT11/temperature \tkey: ");
+    Serial.print("[INFO] pushed: /Live/DHT11/temperature \tkey: ");
     Serial.println(tempValueID);
 
     // === Push humidity value to Firebase ===
-    String humValueID = Firebase.pushFloat("DHT11/humidity", h);
+    String humValueID = Firebase.pushFloat("Live/DHT11/humidity", h);
     if (Firebase.failed()) 
     {
-        Serial.print("[ERROR] pushing /DHT11/humidity failed:");
+        Serial.print("[ERROR] pushing /Live/DHT11/humidity failed:");
         Serial.println(Firebase.error());
         return;
     }
 
-    Serial.print("[INFO] pushed: /DHT11/humidity    \tkey: ");
+    Serial.print("[INFO] pushed: /Live/DHT11/humidity    \tkey: ");
     Serial.println(humValueID);
     Serial.println();
   } 
@@ -157,25 +205,25 @@ void loop()
     Serial.println();
 
     // Push CO2 reading to Firebase
-    String CO2ValueID = Firebase.pushFloat("CCS811/CO2", tempCO2);
+    String CO2ValueID = Firebase.pushFloat("Live/CCS811/CO2", tempCO2);
     if (Firebase.failed()) 
     {
-        Serial.print("[ERROR] pushing /CCS811/CO2 failed:");
+        Serial.print("[ERROR] pushing /Live/CCS811/CO2 failed:");
         Serial.println(Firebase.error());
         return;
     }
-    Serial.print("[INFO] pushed: /CCS811/CO2 \tkey: ");
+    Serial.print("[INFO] pushed: /Live/CCS811/CO2 \tkey: ");
     Serial.println(CO2ValueID);
 
     // Push TVOC reading to Firebase
-    String TVOCValueID = Firebase.pushFloat("CCS811/TVOC", tempTVOC);
+    String TVOCValueID = Firebase.pushFloat("Live/CCS811/TVOC", tempTVOC);
     if (Firebase.failed()) 
     {
-        Serial.print("[ERROR] pushing /CCS811/TVOC failed:");
+        Serial.print("[ERROR] pushing /Live/CCS811/TVOC failed:");
         Serial.println(Firebase.error());
         return;
     }
-    Serial.print("[INFO] pushed: /CCS811/TVOC \tkey: ");
+    Serial.print("[INFO] pushed: /Live/CCS811/TVOC \tkey: ");
     Serial.println(TVOCValueID);
   }
   else if (ccs811.checkForStatusError())
@@ -190,15 +238,15 @@ void loop()
   Serial.print(UV);
 
   // Push UV index reading to Firebase
-  String UVValueID = Firebase.pushFloat("VEML6070/UV", UV);
+  String UVValueID = Firebase.pushFloat("Live/VEML6070/UV", UV);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /VEML6070/UV failed:");
+      Serial.print("[ERROR] pushing /Live/VEML6070/UV failed:");
       Serial.println(Firebase.error());
       return;
   }
   Serial.println();
-  Serial.print("[INFO] pushed: /VEML6070/UV \tkey: ");
+  Serial.print("[INFO] pushed: /Live/VEML6070/UV \tkey: ");
   Serial.println(UVValueID);
 #endif
 #ifdef TCS35725_TEST
@@ -216,64 +264,80 @@ void loop()
   Serial.print("[INFO] Clear: "); Serial.println(c, DEC);
   Serial.println();
 
-  String ColorTempID = Firebase.pushInt("TCS34725/ColorTemperature", colorTemp);
+  String ColorTempID = Firebase.pushInt("Live/TCS34725/ColorTemperature", colorTemp);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/ColorTemperature failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/ColorTemperature failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/ColorTemperature \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/ColorTemperature \tkey: ");
   Serial.println(colorTemp);
 
-  String LightIntensity = Firebase.pushInt("TCS34725/ColorTemperature", lux);
+  String LightIntensity = Firebase.pushInt("Live/TCS34725/LightIntensity", lux);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/ColorTemperature failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/ColorTemperature failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/ColorTemperature \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/ColorTemperature \tkey: ");
   Serial.println(lux);
 
-  String Red = Firebase.pushInt("TCS34725/Red", r);
+  String Red = Firebase.pushInt("Live/TCS34725/Red", r);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/Red failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/Red failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/Red \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/Red \tkey: ");
   Serial.println(r);
 
-  String Green = Firebase.pushInt("TCS34725/Green", g);
+  String Green = Firebase.pushInt("Live/TCS34725/Green", g);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/Green failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/Green failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/Green \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/Green \tkey: ");
   Serial.println(g);
 
-  String Blue = Firebase.pushInt("TCS34725/Blue", b);
+  String Blue = Firebase.pushInt("Live/TCS34725/Blue", b);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/Red failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/Red failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/Blue \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/Blue \tkey: ");
   Serial.println(b);
 
-  String Clear = Firebase.pushInt("TCS34725/Clear", c);
+  String Clear = Firebase.pushInt("Live/TCS34725/Clear", c);
   if (Firebase.failed()) 
   {
-      Serial.print("[ERROR] pushing /TCS34725/Clear failed:");
+      Serial.print("[ERROR] pushing /Live/TCS34725/Clear failed:");
       Serial.println(Firebase.error());
       return;
   }
-  Serial.print("[INFO] pushed: /TCS34725/Clear \tkey: ");
+  Serial.print("[INFO] pushed: /Live/TCS34725/Clear \tkey: ");
   Serial.println(c);
+#endif
+#ifdef SOIL
+  Serial.print("[INFO] Soil Moisture Level: ");
+  MoistureLevel = analogRead(sense_pin);
+  MoistureLevel = MoistureLevel / 10;
+  Serial.println(MoistureLevel);
+
+  String SoilMoisture = Firebase.pushInt("Live/SEN13322/SoilMoisture", MoistureLevel);
+  if (Firebase.failed()) 
+  {
+      Serial.print("[ERROR] pushing /Live/TSEN13322/SoilMoisture failed:");
+      Serial.println(Firebase.error());
+      return;
+  }
+  Serial.print("[INFO] pushed: /Live/SEN13322/SoilMoisture \tkey: ");
+  Serial.println(MoistureLevel);
 #endif
 }
