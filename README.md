@@ -10,7 +10,7 @@ A NodeMCU ESP8266 microcontroller build on top of the Arduino framework is inter
 
 ![FireGuard Dashboard](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/925/741/datas/original.PNG)
 
-The lightweight data uploaded to Firebase if fetched onto a Vue.js web application and displayed in an intuitive and clean dashboard. When dangerous levels are reached, the UI will alert monitors of the potential of a fire by dynamically changing CSS classes.
+The lightweight data uploaded to Firebase is fetched onto a Vue.js web application and displayed in an intuitive and clean dashboard. When dangerous levels are reached, the UI will alert monitors of the potential of a fire by dynamically changing CSS classes.
 
 ![FireGuard Control Panel](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/925/735/datas/original.PNG)
 
